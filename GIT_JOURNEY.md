@@ -82,53 +82,53 @@ merge conflicts across multiple branches using proper Git workflows.
 
 ### Merge 2: main + conflict-simulator (6 files)
 
-Conflict 1: config/app-config.yaml
+#### Conflict 1: config/app-config.yaml
 
-Issue: conflict-simulator branch introduced experimental configuration and feature flags, while main retained stable environment defaults.
-Resolution: Unified both by keeping stable configs as default and adding experimental settings behind FEATURE_EXPERIMENTAL flag.
-Strategy: Used conditional environment block structure to toggle experimental behavior.
-Difficulty: Medium
-Time: 15 minutes
+- **Issue**: The simulator branch added debug mode and custom logging level settings, while main kept minimal production configs
+- **Resolution**: Combined both by introducing DEBUG_MODE and LOG_LEVEL parameters with environment control
+- **Strategy**: Enabled debug options only in non-production environments
+-  **Difficulty**: Medium
+- **Time**: 15 minutes
 
-Conflict 2: config/database-config.json
+#### Conflict 2: config/database-config.json
 
-Issue: main used standard database settings, while conflict-simulator added a new “experimental” profile and credentials format.
-Resolution: Integrated the experimental profile under a new profiles.experimental section while keeping production and development unchanged.
-Strategy: Enabled profile switching using an environment variable DB_PROFILE.
-Difficulty: Medium
-Time: 15 minutes
+- **Issue**: Conflict-simulator used an in-memory SQLite database, while main used PostgreSQL
+- **Resolution**: Added both configurations and enabled database type selection via DB_TYPE variable
+- **Strategy**: Defaulted to PostgreSQL for production and SQLite for simulation/testing
+- **Difficulty**: Medium
+- **Time**: 10 minutes
 
-Conflict 3: scripts/deploy.sh
+#### Conflict 3: scripts/deploy.sh
 
-Issue: conflict-simulator introduced an experimental deployment path with mock simulation logic; main used a direct production deploy flow.
-Resolution: Combined both by adding a conditional --simulate flag to trigger experimental deployment.
-Strategy: Modularized deployment functions and used environment checks to switch between simulation and production.
-Difficulty: Hard
-Time: 20 minutes
+- **Issue**: Conflict-simulator used simulated network deployment, main used real production deployment
+- **Resolution**: Merged logic by adding SIMULATE_DEPLOY flag to toggle between real and test modes
+- **Strategy**: Controlled via environment variable; production unaffected
+- **Difficulty**: Hard
+- **Time**: 20 minutes
 
-Conflict 4: scripts/monitor.js
+#### Conflict 4: scripts/monitor.js
 
-Issue: conflict-simulator integrated AI-enhanced monitoring metrics, while main had basic log-based monitoring.
-Resolution: Merged both by keeping standard monitoring and adding optional AI insights module.
-Strategy: Added configuration toggle USE_AI_MONITOR=true to enable advanced monitoring.
-Difficulty: Medium
-Time: 15 minutes
+- **Issue**: Simulator added fake latency metrics and custom monitoring intervals
+- **Resolution**: Integrated simulation mode alongside real metrics collection
+- **Strategy**: Used a conditional check (IS_SIMULATION) to control data flow
+- **Difficulty**: Medium
+- **Time**: 15 minutes
 
-Conflict 5: docs/architecture.md
+#### Conflict 5: docs/architecture.md
 
-Issue: conflict-simulator branch documented experimental architecture flow; main had standard system overview.
-Resolution: Merged both by adding a dedicated “Experimental Architecture Overview” subsection.
-Strategy: Retained stable architecture as main section and appended simulation diagrams as an appendix.
-Difficulty: Easy
-Time: 10 minutes
+- **Issue**: Simulator branch documented new simulated workflow diagrams conflicting with real architecture diagrams
+- **Resolution**: Added a new section “Simulation Flow Architecture” to document both clearly
+- **Strategy**: Maintained separation of simulation and production flows for clarity
+- **Difficulty**: Easy
+- **Time**: 10 minutes
 
-Conflict 6: README.md
+#### Conflict 6: README.md
 
-Issue: conflict-simulator added experimental build and usage details; main contained standard release info.
-Resolution: Combined both with a clear “Experimental Mode” section under the Features list.
-Strategy: Organized by environment (Stable / Experimental) and noted version compatibility.
-Difficulty: Easy
-Time: 10 minutes
+- **Issue**: Both branches updated setup instructions and feature lists differently
+- **Resolution**: Merged both sections and highlighted simulation-specific features separately
+- **Strategy**: Organized README with subsections for Production and Simulator environments
+- **Difficulty**: Easy
+- **Time**: 10 minutes
 
 ## Most Challenging Parts
 
