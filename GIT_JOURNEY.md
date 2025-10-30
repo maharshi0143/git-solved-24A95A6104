@@ -82,7 +82,53 @@ merge conflicts across multiple branches using proper Git workflows.
 
 ### Merge 2: main + conflict-simulator (6 files)
 
-[Document the second set of conflicts similarly]
+Conflict 1: config/app-config.yaml
+
+Issue: conflict-simulator branch introduced experimental configuration and feature flags, while main retained stable environment defaults.
+Resolution: Unified both by keeping stable configs as default and adding experimental settings behind FEATURE_EXPERIMENTAL flag.
+Strategy: Used conditional environment block structure to toggle experimental behavior.
+Difficulty: Medium
+Time: 15 minutes
+
+Conflict 2: config/database-config.json
+
+Issue: main used standard database settings, while conflict-simulator added a new “experimental” profile and credentials format.
+Resolution: Integrated the experimental profile under a new profiles.experimental section while keeping production and development unchanged.
+Strategy: Enabled profile switching using an environment variable DB_PROFILE.
+Difficulty: Medium
+Time: 15 minutes
+
+Conflict 3: scripts/deploy.sh
+
+Issue: conflict-simulator introduced an experimental deployment path with mock simulation logic; main used a direct production deploy flow.
+Resolution: Combined both by adding a conditional --simulate flag to trigger experimental deployment.
+Strategy: Modularized deployment functions and used environment checks to switch between simulation and production.
+Difficulty: Hard
+Time: 20 minutes
+
+Conflict 4: scripts/monitor.js
+
+Issue: conflict-simulator integrated AI-enhanced monitoring metrics, while main had basic log-based monitoring.
+Resolution: Merged both by keeping standard monitoring and adding optional AI insights module.
+Strategy: Added configuration toggle USE_AI_MONITOR=true to enable advanced monitoring.
+Difficulty: Medium
+Time: 15 minutes
+
+Conflict 5: docs/architecture.md
+
+Issue: conflict-simulator branch documented experimental architecture flow; main had standard system overview.
+Resolution: Merged both by adding a dedicated “Experimental Architecture Overview” subsection.
+Strategy: Retained stable architecture as main section and appended simulation diagrams as an appendix.
+Difficulty: Easy
+Time: 10 minutes
+
+Conflict 6: README.md
+
+Issue: conflict-simulator added experimental build and usage details; main contained standard release info.
+Resolution: Combined both with a clear “Experimental Mode” section under the Features list.
+Strategy: Organized by environment (Stable / Experimental) and noted version compatibility.
+Difficulty: Easy
+Time: 10 minutes
 
 ## Most Challenging Parts
 
